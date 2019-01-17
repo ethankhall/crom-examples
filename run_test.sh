@@ -8,18 +8,29 @@ declare -a arr=("example-1" "example-2")
 CURRENT_VERSION="0.1.4"
 NEXT_VERSION="0.1.5"
 
-# Clean up working dir
-# git --work-tree=$DIR reset --hard origin/master
-# git --work-tree=$DIR checkout -- .
-
+# Set the version to always be v0.1.0, this way the working dir should always have a change
 for i in "${arr[@]}"; do
     pushd $DIR/$i
-    $CROM_EXEC update-version --override-version v0.1.0
+    $CROM_EXEC update-version --override-version v0.1.`date +%s`
 done
 
 # validate that current version is 
 for i in "${arr[@]}"; do
     pushd $DIR/$i
-    $CROM_EXEC update-version
+    $CROM_EXEC update-version --pre-release none
     ./validate.sh $CURRENT_VERSION
+done
+
+# validate that updated version is 
+for i in "${arr[@]}"; do
+    pushd $DIR/$i
+    $CROM_EXEC update-version --pre-release snapshot
+    ./validate.sh "$NEXT_VERSION-SNAPSHOT"
+done
+
+# validate that updated version is 
+for i in "${arr[@]}"; do
+    pushd $DIR/$i
+    $CROM_EXEC update-version --pre-release release
+    ./validate.sh "$NEXT_VERSION"
 done
