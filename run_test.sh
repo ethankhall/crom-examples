@@ -5,8 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 declare -a arr=("example-1" "example-2" "example-3")
 
-CURRENT_VERSION="0.1.4"
-NEXT_VERSION="0.1.5"
+CURRENT_VERSION="0.1.5"
+NEXT_VERSION="0.1.6"
 
 # Set the version to always be v0.1.0, this way the working dir should always have a change
 for i in "${arr[@]}"; do
